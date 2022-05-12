@@ -22,3 +22,12 @@ Simple CPU design inspired from [RISC V (RV32I) instruction set](https://mark.th
 
 ## system diagram
 ![system_diagram](resources/system_diagram.drawio.png)
+
+## directory
+resources
+- [specification spreadsheet](resources/specifications.numbers)
+- readme images
+
+verilog
+- verilog files
+- testbenches
