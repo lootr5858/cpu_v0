@@ -14,4 +14,11 @@ Simple CPU design inspired from RISC V (RV32I) instruction set
     - 8 bit array
     - data + instructions
 
+![specs](resources/specs.png)
 
+![gloassry](resources/glossary.png)
+
+![instruction_set](resources/instruction_set.png)
+
+## system diagram
+![system_diagram](resources/system_diagram.drawio.png)
