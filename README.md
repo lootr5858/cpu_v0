@@ -1,6 +1,6 @@
 # cpu_v0
 
-Simple CPU design inspired from RISC V (RV32I) instruction set
+Simple CPU design inspired from [RISC V (RV32I) instruction set](https://mark.theis.site/riscv/)
 
 ## Specifications
 - 16 bit instructions
