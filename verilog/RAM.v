@@ -14,8 +14,8 @@ module RAM
     input [SZB - 1 : 0] addr,
 
     // data
-    input  [BIT - 1 : 0] d,
-    output [BIT - 1 : 0] q
+    input      [BIT - 1 : 0] d,
+    output reg [BIT - 1 : 0] q
 );
 
     localparam SZA = 2 ** SZB;
@@ -23,8 +23,6 @@ module RAM
     reg [BIT - 1 : 0] mem [0 : SZA - 1];
 
     integer ri;
-
-    assign q = mem [addr];
 
     always @(posedge clock or posedge reset) begin
 
@@ -40,7 +38,7 @@ module RAM
             
         end
 
-        else mem [0] <= mem [0];
+        else q <= mem [addr];
         
     end
 

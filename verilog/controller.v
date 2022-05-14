@@ -175,6 +175,24 @@ module controller
 
             casex (op_code)
 
+                `PASS : begin
+
+                    pc_offset <= {`SZB_INS {`OFF}};
+                    addr_RAM  <= {`SZB_RAM{`OFF}};
+                    addr_rs0  <= {`SZB_REG{`OFF}};
+                    addr_rs1  <= {`SZB_REG{`OFF}};
+                    addr_rd   <= {`SZB_REG{`OFF}};                    
+
+                    en_offset <= `OFF;
+                    en_cnt    <= `OFF;
+                    ram_we    <= `OFF;
+                    rd_we     <= `OFF;
+                    en_mv     <= `OFF;                   
+                    
+                    mux_rd_ram_alu_io <= 2'b00;
+                    
+                end
+
                 `LOAD : begin
 
                     pc_offset <= {`SZB_INS {`OFF}};
@@ -206,24 +224,6 @@ module controller
                     ram_we    <= `ON;
                     rd_we     <= `OFF;
                     en_mv     <= `OFF;                   
-                    
-                    mux_rd_ram_alu_io <= 2'b00;
-                    
-                end
-
-                `MOVE : begin
-
-                    pc_offset <= {`SZB_INS {`OFF}};
-                    addr_RAM  <= {`SZB_RAM{`OFF}};
-                    addr_rs0  <= instructions [3  : 0];
-                    addr_rs1  <= {`SZB_REG{`OFF}};
-                    addr_rd   <= instructions [11 : 4];                    
-
-                    en_offset <= `OFF;
-                    en_cnt    <= `ON;
-                    ram_we    <= `OFF;
-                    rd_we     <= `OFF;
-                    en_mv     <= `ON;                   
                     
                     mux_rd_ram_alu_io <= 2'b00;
                     

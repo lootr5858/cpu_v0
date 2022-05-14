@@ -1,11 +1,16 @@
 `include "./definitions.v"
-`include "./regfile.v"
+`include "./reg_data.v"
+`include "./reg_inst.v"
 `include "./pc.v"
 `include "./alu.v"
 `include "./controller.v"
 
 module cpu
 (
+    // dut
+    output [`SZA_INS * `BIT_INST - 1 : 0] testreg_inst,
+    output [`SZA_REG * `BIT_DATA - 1 : 0] testreg_data,
+   
     input clock, reset, 
     
     input                          interrupt,
@@ -22,7 +27,8 @@ module cpu
     wire en_offset, en_cnt,
          ins_we, rd_we, mv_we, ram_we;
 
-    wire [`SZB_INS  - 1 : 0] pc_offset, pc_cnt, addr_ins, sel_inst;  // addr/array of instruction regfile
+    wire [`SZB_INS - 1 : 0] pc_offset, addr_iwe, sel_inst, addr_ins;  // addr/array of instruction regfile
+    wire [`BIT_CNT - 1 : 0] pc_cnt;
     wire [`SZB_REG - 1 : 0] addr_rs0, addr_rs1, addr_rd;            // addr/array of data regfile
     wire [`BIT_OP  - 1 : 0] alu_op;
 
@@ -36,7 +42,9 @@ module cpu
     assign rd    = (mux_rd_ram_alu_io == 2'b00) ? ram_q :
                    ((mux_rd_ram_alu_io == 2'b01) ? alu_dout : io_din);
 
-    assign instructions = interrupt ? io_inst : dinst;
+    assign instructions = interrupt ? io_inst  : dinst;
+    assign sel_inst     = pc_cnt >> 2;
+    assign addr_ins     = ins_we    ? addr_iwe : sel_inst;
 
     always @(posedge clock or posedge reset) begin
 
@@ -48,29 +56,27 @@ module cpu
         
     end
 
-    regfile #(.BIT (`BIT_INST),
+    reg_inst #(.BIT (`BIT_INST),
               .SZB (`BIT_OP))   regfile_instructions
     (
+        .testreg (testreg_inst),
+        
         .clock (clock),
         .reset (reset),
-        .rd_we (ins_we),
-        .en_mv (`OFF),
-
-        .addr_rs0 (pc_cnt),
-        .addr_rs1 ({`BIT_OP{`OFF}}),
-        .addr_rd  (addr_ins),
-
-        .rd  (io_din),
-        .rs0 (dinst)
+        .we    (ins_we),
+        .addr  (addr_ins),
+        .din   (io_din),
+        .dout  (dinst)
     );
 
-    regfile #(.BIT (`BIT_DATA),
+    reg_data #(.BIT (`BIT_DATA),
               .SZB (`SZB_REG))   regfile_data
     (
+        .testreg (testreg_data),
+        
         .clock (clock),
         .reset (reset),
-        .rd_we (rd_we),
-        .en_mv (mv_we),
+        .we (rd_we),
 
         .addr_rs0 (addr_rs0),
         .addr_rs1 (addr_rs1),
@@ -106,7 +112,7 @@ module cpu
         .addr_rs0     (addr_rs0),
         .addr_rs1     (addr_rs1),
         .addr_rd      (addr_rd),
-        .addr_ins     (addr_ins),
+        .addr_ins     (addr_iwe),
         
         .en_offset (en_offset),
         .en_cnt    (en_cnt),

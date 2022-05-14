@@ -4,7 +4,7 @@ module alu
 (
     input clock, reset,
 
-    input  [`BIT_OP - 1 : 0] alu_op,
+    input  [`BIT_OP   - 1 : 0] alu_op,
     input  [`BIT_DATA - 1 : 0] din0, din1,
     output [`BIT_DATA - 1 : 0] dout
 );

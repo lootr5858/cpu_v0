@@ -9,17 +9,22 @@
 // bit-width / word length
 `define BIT_DATA 16
 `define BIT_INST 16
-`define BIT_OP   4     
+`define BIT_OP   4 
+`define BIT_CNT  $clog2(`SZA_INS * 4)   
 
 // array sizes
 `define SZB_INS  4
 `define SZB_REG  4
 `define SZB_RAM  8
 
+`define SZA_INS 2 ** `SZB_INS
+`define SZA_REG 2 ** `SZB_REG
+`define SZA_RAM 2 ** `SZB_RAM
+
 // opcodes
-`define LOAD   4'b0000
-`define STORE  4'b0001
-`define MOVE   4'b0010
+`define PASS   4'b0000
+`define LOAD   4'b0001
+`define STORE  4'b0010
 `define JUMP   4'b0011
 `define INV    4'b0100
 `define AND    4'b0101
