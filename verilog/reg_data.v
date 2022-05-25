@@ -6,8 +6,8 @@ module reg_data
     parameter SZB = 4
  )
 (
-    // dut
-    output [SZA * BIT - 1 : 0] testreg,
+    // // dut
+    // output [SZA * BIT - 1 : 0] testreg,
     
     input                    clock, reset, we,
     input      [SZB - 1 : 0] addr_rs0, addr_rs1, addr_rd,
@@ -53,12 +53,12 @@ module reg_data
         
     end
 
-    // dut
-    genvar ti;
-    generate
+    // // dut
+    // genvar ti;
+    // generate
 
-        for (ti = 0; ti < SZA; ti = ti + 1) assign testreg [BIT * (ti + 1) - 1 : BIT * ti] = regf [ti];
+    //     for (ti = 0; ti < SZA; ti = ti + 1) assign testreg [BIT * (ti + 1) - 1 : BIT * ti] = regf [ti];
         
-    endgenerate
+    // endgenerate
     
 endmodule

@@ -8,8 +8,8 @@
 module cpu
 (
     // dut
-    output [`SZA_INS * `BIT_INST - 1 : 0] testreg_inst,
-    output [`SZA_REG * `BIT_DATA - 1 : 0] testreg_data,
+    // output [`SZA_INS * `BIT_INST - 1 : 0] testreg_inst,
+    // output [`SZA_REG * `BIT_DATA - 1 : 0] testreg_data,
    
     input clock, reset, 
     
@@ -59,7 +59,7 @@ module cpu
     reg_inst #(.BIT (`BIT_INST),
               .SZB (`BIT_OP))   regfile_instructions
     (
-        .testreg (testreg_inst),
+        // .testreg (testreg_inst),
         
         .clock (clock),
         .reset (reset),
@@ -72,7 +72,7 @@ module cpu
     reg_data #(.BIT (`BIT_DATA),
               .SZB (`SZB_REG))   regfile_data
     (
-        .testreg (testreg_data),
+        // .testreg (testreg_data),
         
         .clock (clock),
         .reset (reset),
